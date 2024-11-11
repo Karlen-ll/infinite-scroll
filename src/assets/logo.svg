@@ -1,0 +1,24 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 95 45"
+  fill="none"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-miterlimit="10"
+>
+  <defs>
+    <path id="_INFINITE_ICON" d="M39.1 33.5C25 47.1 2.5 36.2 5.8 19.3 8.8 3.8 28.4-3 47 22.3 64.7 46.7 86.3 43.4 89.3 24c3-20.8-25.6-24.3-34.9-8.2 0 0 11.6-.3 11.6 0H54.4L53 4.5" />
+  </defs>
+
+  <use href="#_INFINITE_ICON" stroke="currentColor" stroke-width="2" />
+  <use href="#_INFINITE_ICON" stroke-dashoffset="280" stroke-dasharray="280" stroke="#7041EE" stroke-width="4">
+    <animate
+      attributeName="stroke-dashoffset"
+      repeatCount="indefinite"
+      calcMode="linear"
+      restart="always"
+      values="0;280;0"
+      dur="10s"
+    />
+  </use>
+</svg>
