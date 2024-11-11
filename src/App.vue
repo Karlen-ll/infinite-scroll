@@ -2,19 +2,19 @@
   <div class="page">
     <v-header title="Infinite Scroll" />
 
-    <div class="page__container">
-      <infinite-scroll class="page__scroller" :disabled="!!error" @scrolled="handleLoad">
+    <main class="page__container">
+      <infinite-scroll class="page__scroller" :disabled="!!errorMessage" @scrolled="handleLoad">
         <user-list :data="users" />
 
-        <div v-if="loading" class="page__loading">
+        <div v-if="isLoading" class="page__loading">
           <svg-loading class="page__loader" width="2em" height="2em" />
         </div>
 
-        <div v-if="error" class="page__error">{{ error }}</div>
+        <div v-if="errorMessage" class="page__error">{{ errorMessage }}</div>
       </infinite-scroll>
-    </div>
+    </main>
 
-    <v-footer :count="users.length" :page="page" />
+    <v-footer :count="users.length" :page="pageNumber" />
   </div>
 </template>
 
@@ -31,11 +31,14 @@ import { User } from '@/types/user'
 
 const { method } = useMethod()
 
+/** @desc Array of users */
 const users = ref<User[]>([])
-const loading = ref(false)
-const error = ref<string | null>(null)
-const page = ref<number>(0)
 
+const isLoading = ref(false)
+const errorMessage = ref<string | null>(null)
+const pageNumber = ref<number>(0)
+
+/** @desc Selecting a method */
 const methodMap = {
   [Method.Fetch]: fetchUser,
   [Method.Mock]: getMockUser,
@@ -44,18 +47,19 @@ const methodMap = {
 
 const hasError = (value: UserRequest | UserRequestError): value is UserRequestError => Object.hasOwn(value, 'error')
 
+/** @desc Load more users */
 const loadMore = async () => {
-  if (loading.value) {
-    // Выходим, если процесс уже запущен
+  if (isLoading.value) {
+    // Exit if the process is already running
     return
   }
 
   try {
-    loading.value = true
-    const response = await methodMap[method.value]({ page: ++page.value })
+    isLoading.value = true
+    const response = await methodMap[method.value]({ page: ++pageNumber.value })
 
     if (!response || hasError(response)) {
-      error.value = response?.error ?? '⚠️ Error request!'
+      errorMessage.value = response?.error ?? '⚠️ Error request!'
       return
     }
 
@@ -63,7 +67,7 @@ const loadMore = async () => {
   } catch (error) {
     console.error(error)
   } finally {
-    loading.value = false
+    isLoading.value = false
   }
 }
 

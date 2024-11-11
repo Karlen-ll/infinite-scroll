@@ -1,8 +1,10 @@
 <template>
-  <ul class="footer list">
-    <li>Copyright 2024 © Pireverdiev Karlen</li>
-    <li>{{ count }} эл. / {{ page }} стр.</li>
-  </ul>
+  <div class="footer">
+    <ul class="list">
+      <li>Copyright 2024 © Pireverdiev Karlen</li>
+      <li>{{ count }} эл. / {{ page }} стр.</li>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">

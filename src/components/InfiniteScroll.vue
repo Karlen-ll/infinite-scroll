@@ -4,7 +4,7 @@
       <slot />
     </div>
 
-    <button class="scroller__button" @click="handleClick">
+    <button class="scroller__button" @click="handleClick" aria-label="Up">
       <v-icon name="top" />
     </button>
   </div>

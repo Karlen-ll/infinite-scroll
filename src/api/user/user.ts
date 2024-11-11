@@ -26,6 +26,9 @@ export async function fetchUser(params?: UserRequestParams) {
   }
 }
 
+/** ↓↓↓ For testing */
+/** */
+
 export async function getMockUser(_params?: UserRequestParams): Promise<UserRequest | UserRequestError> {
   return new Promise((resolve) => setTimeout(() => resolve(mockData as UserRequest), MOCK_TIMEOUT))
 }

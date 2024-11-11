@@ -1,6 +1,6 @@
 export type SearchParams = Record<string, unknown>
 
-/** Подготовка параметров для метода URLSearchParams */
+/** Preparing parameters for the URLSearchParams method */
 export function prepareParams(params?: SearchParams): Record<string, string> | undefined {
   if (!params) {
     return
@@ -17,7 +17,7 @@ export function prepareParams(params?: SearchParams): Record<string, string> | u
   return result
 }
 
-/** Насыщение ссылки параметрами */
+/** Saturating a link with parameters */
 export function saturateUrl(url: string, params?: SearchParams, defaultParams?: SearchParams) {
   const searchParams = new URLSearchParams(prepareParams({ ...defaultParams, ...params }))
 

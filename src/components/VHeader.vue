@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <header class="header">
     <span class="header__logo">
       <logo-svg class="header__icon" width="3rem" height="1.5rem" aria-hidden="true" />
 
@@ -18,7 +18,7 @@
         :checked="item === method"
       />
     </div>
-  </div>
+  </header>
 </template>
 
 <script setup lang="ts">

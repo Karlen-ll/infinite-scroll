@@ -14,6 +14,8 @@ function getMethodFromStorage(defaultMethod: Method) {
 
 const method = ref<Method>(getMethodFromStorage(Method.Mock))
 
+/** @desc Method of working with users.
+ * For testing... */
 export default function useMethod() {
   const changeMethod = async (newValue: Method) => {
     method.value = newValue

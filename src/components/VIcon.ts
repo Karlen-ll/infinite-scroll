@@ -3,21 +3,21 @@ import { h, defineComponent, computed, PropType } from 'vue'
 /** Icon of sprite */
 export default defineComponent({
   props: {
-    /** Название иконки
+    /** Icon name
      * @required */
     name: {
       type: String as PropType<'top' | 'user'>,
       required: true,
     },
 
-    /** Имя тега
+    /** Tag name
      * @default 'span' */
     tag: {
       type: String,
       default: 'span',
     },
 
-    /** Отображение иконки в дереве доступности
+    /** Displaying an icon in the accessibility tree
      * @default true */
     ariaHidden: {
       type: [Boolean, String],
