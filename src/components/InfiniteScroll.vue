@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { throttle } from 'throttle-debounce'
+import { debounce } from 'throttle-debounce'
 import VIcon from '@/components/VIcon'
 
 const THROTTLE_DELAY = 500
@@ -33,7 +33,7 @@ const emit = defineEmits<{
 const wrapperRef = ref<HTMLDivElement | null>(null)
 const contentRef = ref<HTMLDivElement | null>(null)
 
-const handleScroll = throttle(THROTTLE_DELAY, () => {
+const handleScroll = debounce(THROTTLE_DELAY, () => {
   if (!wrapperRef.value || !contentRef.value || props.disabled) {
     return
   }

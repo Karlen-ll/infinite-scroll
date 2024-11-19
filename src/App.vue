@@ -3,7 +3,7 @@
     <v-header title="Infinite Scroll" />
 
     <main class="page__container">
-      <infinite-scroll class="page__scroller" :disabled="!!errorMessage" @scrolled="handleLoad">
+      <infinite-scroll class="page__scroller" :disabled="scrollDisabled" @scrolled="handleLoad">
         <user-list :data="users" />
 
         <div v-if="isLoading" class="page__loading">
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { fetchUser, getErrorUser, getMockUser, UserRequest, UserRequestError } from '@/api/user'
 import useMethod, { Method } from '@/hooks/method'
 import VHeader from '@/components/VHeader.vue'
@@ -31,8 +31,11 @@ import { User } from '@/types/user'
 
 const { method } = useMethod()
 
+const MAX_LENGTH = 30;
+
 /** @desc Array of users */
 const users = ref<User[]>([])
+const disabledLoad = ref(false)
 
 const isLoading = ref(false)
 const errorMessage = ref<string | null>(null)
@@ -45,7 +48,17 @@ const methodMap = {
   [Method.Error]: getErrorUser,
 }
 
+const scrollDisabled = computed(() => !!errorMessage.value && disabledLoad.value)
+
 const hasError = (value: UserRequest | UserRequestError): value is UserRequestError => Object.hasOwn(value, 'error')
+
+const updateUser = (value: User[]) => {
+  if (users.value.length >= MAX_LENGTH) {
+    users.value = [...users.value.slice(users.value.length - MAX_LENGTH, MAX_LENGTH), ...value]
+  } else {
+    users.value.push(...value)
+  }
+}
 
 /** @desc Load more users */
 const loadMore = async () => {
@@ -63,7 +76,7 @@ const loadMore = async () => {
       return
     }
 
-    users.value.push(...response.results)
+    updateUser(response.results)
   } catch (error) {
     console.error(error)
   } finally {
@@ -76,7 +89,7 @@ onMounted(() => {
 })
 
 const handleLoad = () => {
-  loadMore()
+  loadMore();
 }
 </script>
 
